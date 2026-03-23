@@ -30,6 +30,7 @@ body {
   padding: 50px 30px;
 }
 
+
 /* LOG IN text */
 .box h2 {
   letter-spacing: 6px;
@@ -46,7 +47,7 @@ input {
   border: 1px solid #7a6f63;
   background: #f6f1ea;
   text-align: center;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   font-size: 14px;
 }
 
@@ -74,4 +75,47 @@ button {
 .error {
   color: darkred;
   display: none;
+  font-weight: bold;
+}
+
+/* Dashboard Box */
+.dashboard-box {
+  background: #eae4da;
+  width: 85%;
+  margin: 40px auto;
+  padding: 40px 30px;
+}
+
+/* Dashboard section spacing */
+.dashboard-section {
+  margin-top: 40px
+}
+
+/* box heading/style */
+.box h2
+.dashboard-box h2 {
+  letter-spacing: 6px;
+  color: #7a6f63;
+  margin-bottom: 30px
+}
+
+/* lable */
+label {
+  display: block;
+  margin-top: 10px;
+  letter-spacing: 3px;
+}
+
+/* welcome text */
+.welcome-text {
+  font-size:  18px;
+  margin-bottom: 30px;
+}
+
+/* navigation bar (at top) */
+.navbar {
+  background: #eae4da;
+  width: 85%;
+  margin: 30px auto;
+  padding: 15px;
 }
