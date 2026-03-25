@@ -118,4 +118,37 @@ label {
   width: 85%;
   margin: 30px auto;
   padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 40px
+}
+.navbar a {
+  text-decoration: none;
+  color: #6f6458;
+  font-weight: bold
+  letter-spacing: 3px;
+  font-size: 16px;
+}
+
+.navbar a:hover {
+  text-decoration:underline;
+}
+
+/*logo*/
+.logo-container {
+  text-align:center;
+  margin-top: 20px;
+}
+
+.logo {
+  width: 350px;
+  max-width: 95%;
+}
+
+
+/* section in the dash */
+.dashboard-section h3 {
+  letter-spacing: 4px;
+  color:#7a6f63
+  margin-top: 30px;
 }

@@ -24,3 +24,4 @@ function logout () {
 // return to login page 
 window.location.href = "index.html";
 }
+
