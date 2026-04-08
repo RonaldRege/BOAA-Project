@@ -1,0 +1,154 @@
+/* Background */
+body {
+  background: #f6f1ea;
+  font-family: Georgia, serif;
+  text-align: center;
+  margin: 0;
+}
+
+/* Main Title */
+.title {
+  margin-top: 80px;
+  font-size: 36px;
+  letter-spacing: 8px;
+  color: #6f6458;
+}
+
+/* Subtitle */
+.subtitle {
+  margin-top: 15px;
+  font-size: 16px;
+  letter-spacing: 6px;
+  color: #8c7f72;
+}
+
+/* Login Box */
+.box {
+  background: #eae4da;
+  width: 450px;
+  margin: 70px auto;
+  padding: 50px 30px;
+}
+
+
+/* LOG IN text */
+.box h2 {
+  letter-spacing: 6px;
+  color: #7a6f63;
+  margin-bottom: 40px;
+}
+
+/* Inputs */
+input {
+  width: 80%;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 30px;
+  border: 1px solid #7a6f63;
+  background: #f6f1ea;
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 14px;
+}
+
+/* Button */
+button {
+  width: 200px;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #7a6f63;
+  background: #f6f1ea;
+  cursor: pointer;
+  letter-spacing: 4px;
+  margin-top: 20px;
+}
+
+/* Links */
+.links {
+  margin-top: 20px;
+  letter-spacing: 3px;
+  font-size: 12px;
+  color: #7a6f63;
+}
+
+/* Error message */
+.error {
+  color: darkred;
+  display: none;
+  font-weight: bold;
+}
+
+/* Dashboard Box */
+.dashboard-box {
+  background: #eae4da;
+  width: 85%;
+  margin: 40px auto;
+  padding: 40px 30px;
+}
+
+/* Dashboard section spacing */
+.dashboard-section {
+  margin-top: 40px
+}
+
+/* box heading/style */
+.box h2
+.dashboard-box h2 {
+  letter-spacing: 6px;
+  color: #7a6f63;
+  margin-bottom: 30px
+}
+
+/* lable */
+label {
+  display: block;
+  margin-top: 10px;
+  letter-spacing: 3px;
+}
+
+/* welcome text */
+.welcome-text {
+  font-size:  18px;
+  margin-bottom: 30px;
+}
+
+/* navigation bar (at top) */
+.navbar {
+  background: #eae4da;
+  width: 85%;
+  margin: 30px auto;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 40px
+}
+.navbar a {
+  text-decoration: none;
+  color: #6f6458;
+  font-weight: bold
+  letter-spacing: 3px;
+  font-size: 16px;
+}
+
+.navbar a:hover {
+  text-decoration:underline;
+}
+
+/*logo*/
+.logo-container {
+  text-align:center;
+  margin-top: 20px;
+}
+
+.logo {
+  width: 350px;
+  max-width: 95%;
+}
+
+
+/* section in the dash */
+.dashboard-section h3 {
+  letter-spacing: 4px;
+  color:#7a6f63
+  margin-top: 30px;
+}
