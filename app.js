@@ -1,4 +1,5 @@
-// app.js
+// log in page for C.I.M.S.
+//authentication
 
 function checkLogin() {
   const user = document.getElementById("user").value.trim();
@@ -18,16 +19,68 @@ function checkLogin() {
     errorMessage.style.display = "block";
     return;
   }
+// log in page for C.I.M.S.
 
-  const adminUser = "admin";
-  const adminPass = "cims123";
+/*const usersDatabase = [
+  { username: "admin", password: null,
+     role: "admin", status: "active" },
+  { username: "board", password: null, 
+    role: "board", status: "active" },
+  { username: "member", password: null, 
+    role: "member", status: "active" }
+];
 
-  const boardUser = "board";
-  const boardPass = "board123";
+  //username required
+  if (user === "") {
+    errorMessage.textContent = "Please enter a username";
+    errorMessage.style.display = "block";
+    return;
+  }
 
-  const memberUser = "member";
-  const memberPass = "member123";
+  //username must exist
+  const foundUser = usersDatabase.find(u => u.username === user);
 
+  if (!foundUser) {
+    errorMessage.textContent = "Username does not exist.";
+    errorMessage.style.display = "block";
+    return;
+  }
+
+  //create password new account
+  if (foundUser.password === null) {
+    if (pass === "") {
+      errorMessage.textContent = "Please create a password to continue.";
+      errorMessage.style.display = "block";
+      return;
+    }
+
+    // Save password
+    foundUser.password = pass;
+  } 
+  // returning user
+  else {
+    if (pass === "") {
+      errorMessage.textContent = "Please enter your password.";
+      errorMessage.style.display = "block";
+      return;
+    }
+
+    if (foundUser.password !== pass) {
+      errorMessage.textContent = "Incorrect password.";
+      errorMessage.style.display = "block";
+      return;
+    }
+  }
+
+  // authentication
+  sessionStorage.setItem("loggedIn", "true");
+  sessionStorage.setItem("username", foundUser.username);
+  sessionStorage.setItem("role", foundUser.role);
+
+  window.location.href = "dashboard.html";
+}
+*/
+//
   if (user === adminUser && pass === adminPass) {
     sessionStorage.setItem("loggedIn", "true");
     sessionStorage.setItem("username", user);
@@ -43,8 +96,11 @@ function checkLogin() {
     sessionStorage.setItem("username", user);
     sessionStorage.setItem("role", "member");
     window.location.href = "dashboard.html";
-  } else {
+
+    }
+    
+   else {
     errorMessage.textContent = "Wrong username or password. Please try again";
-    errorMessage.style.display = "block";
+    errorMessage.style.display = "block"; //visable error
   }
-}
+  }
