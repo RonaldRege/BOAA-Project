@@ -1,37 +1,34 @@
-//handles inventory tab 
+// inventory.js
 
 let inventoryData = [
-    {
-        product: "Table Cloth",
-        categroy: "Decor",
-        location: "Storage Closet",
-        inStock: 4,
-        total: 6,
-        event: "Open House"
-    },
-    {
-        product: "Folding Table",
-        categroy: "Furniture",
-        location: "Room 102",
-        inStock: 2,
-        total: 2,
-        event: "Club Meeting"
-    }
-
+  {
+    product: "Table Cloth",
+    category: "Decor",
+    location: "Storage Closet",
+    inStock: 4,
+    total: 6,
+    event: "Open House"
+  },
+  {
+    product: "Folding Table",
+    category: "Furniture",
+    location: "Room 102",
+    inStock: 2,
+    total: 2,
+    event: "Club Meeting"
+  }
 ];
 
-//availability
-function getAvailability(item){
-    if(item.inStock ===0){
-        return "Out of Stock";
-    } else if (item.InStock <=1) {
-        return "Low Stock";
-    } else{
-        return "Available" ;
-    }
+function getAvailability(item) {
+  if (item.inStock === 0) {
+    return "Out of Stock";
+  } else if (item.inStock <= 1) {
+    return "Low Stock";
+  } else {
+    return "Available";
+  }
 }
 
-//table
 function renderInventory() {
   const tableBody = document.getElementById("inventoryTableBody");
   tableBody.innerHTML = "";
@@ -53,37 +50,35 @@ function renderInventory() {
   });
 }
 
-//adding new item
 function addInventoryItem() {
-    const product = document.getElementById("itemName").value.trim();
-    const category = document.getElementById("itemCategory").value.trim();
-    const location = document.getElementById("itemLocation").value.trim();
-    const inStock = document.getElementById("itemStock").value.trim();
-    const total = document.getElementById("itemTotal").value.trim();
-    const event = document.getElementById("itemEvent").value.trim();
+  const product = document.getElementById("itemName").value.trim();
+  const category = document.getElementById("itemCategory").value.trim();
+  const location = document.getElementById("itemLocation").value.trim();
+  const inStock = document.getElementById("itemStock").value.trim();
+  const total = document.getElementById("itemTotal").value.trim();
+  const event = document.getElementById("itemEvent").value.trim();
 
-    if (product ===""|| category ==="" || location ===""|| inStock === ""|| total ===""){
-        showStatus("Please fill in all the inventory fields.");
-        return;
-    }
+  if (product === "" || category === "" || location === "" || inStock === "" || total === "") {
+    showStatus("Please fill in all the inventory fields.");
+    return;
+  }
 
-    inventoryData.push({
+  inventoryData.push({
     product: product,
     category: category,
     location: location,
     inStock: Number(inStock),
     total: Number(total),
     event: event
+  });
 
-    })
+  showStatus("Inventory item added.");
+  renderInventory();
 
-    showStatus("Inventory item added.");
-    renderInventory();
-
-    document.getElementById("itemName").value = "";
-    document.getElementById("itemCategory").value = "";
-    document.getElementById("itemLocation").value = "";
-    document.getElementById("itemStock").value = "";
-    document.getElementById("itemTotal").value = "";
-    document.getElementById("itemEvent").value = "";
+  document.getElementById("itemName").value = "";
+  document.getElementById("itemCategory").value = "";
+  document.getElementById("itemLocation").value = "";
+  document.getElementById("itemStock").value = "";
+  document.getElementById("itemTotal").value = "";
+  document.getElementById("itemEvent").value = "";
 }

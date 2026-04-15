@@ -1,49 +1,32 @@
-<! log in page 
-// Author:Amelia Barr
-// Purpose:Login page for C.I.M.S. prototype (slides)
-
-// References:
-// HTML structure based on MDN Web Docs: "Getting Started with HTML"
-// Form inputs based on MDN: "The HTML input element"
-// layout concepts referenced from W3Schools CSS tutorials
- >  
-
-
-<!DOCTYPE html> 
-<html lang="en"> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CIMS Login</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!--title system-->
   <h1 class="title">C.I.M.S.</h1>
   <p class="subtitle">Club Inventory Management System</p>
 
-<!--login box-->
   <div class="box">
     <h2>LOG IN</h2>
 
-<!--if login is wrong-->
     <p id="error" class="error">Wrong username or password. Try again.</p>
 
-    <!--inputs-->
     <label>Username</label>
     <input id="user" type="text" placeholder="Enter username" />
+
     <label>Password</label>
     <input id="pass" type="password" placeholder="Enter password" />
 
-<!--log in button-->
     <button onclick="checkLogin()">LOG IN</button>
-    
-<!--design only-->
+
     <p class="links">Forgot password</p>
     <p class="links">Create new account</p>
 
-  <!--design-->
     <p class="demo">Admin login: <b>admin</b> / <b>cims123</b></p>
     <p class="demo">Board login: <b>board</b> / <b>board123</b></p>
     <p class="demo">Member login: <b>member</b> / <b>member123</b></p>
