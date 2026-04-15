@@ -49,7 +49,7 @@ function checkLogin() { //runs when called (onclick)
     window.location.href = "dashboard.html"; // kinda simulates entering the system after "authentication"
 
   } else {
-    errorMessage.textContent = "wrong username or password. Please try again";
+    errorMessage.textContent = "Wrong username or password. Please try again";
     errorMessage.style.display = "block"; //visable error
   }
 }

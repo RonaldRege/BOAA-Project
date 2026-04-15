@@ -126,7 +126,7 @@ label {
   text-decoration: none;
   color: #6f6458;
   font-weight: bold
-  letter-spacing: 3px;
+  letter-spacing 3px;
   font-size: 16px;
 }
 
@@ -150,5 +150,5 @@ label {
 .dashboard-section h3 {
   letter-spacing: 4px;
   color:#7a6f63
-  margin-top: 30px;
+  margin-top 30px;
 }
