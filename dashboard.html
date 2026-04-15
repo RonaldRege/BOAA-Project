@@ -1,39 +1,131 @@
-<! page once you log in >
-
-<!DOCTYPE html> 
-<html lang=""en"> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset = "UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CIMS Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!--heading-->
+  <!-- Heading -->
   <h1 class="title">C.I.M.S.</h1>
   <p class="subtitle">Club Inventory Management System</p>
 
-<!-- Navigation Bar-->
- <nav class = "navbar">
-    <a href = "#inventory">Inventory</a>
-    <a href = "#events">Events</a>
-    <a href = "#members">Members</a>
-    <a href = "#" onclick = "logout()">Logout</a>
- </nav>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <button class="tab-button active" onclick="showTab('home', this)">Home</button>
+    <button class="tab-button" onclick="showTab('inventory', this)">Inventory</button>
+    <button class="tab-button" onclick="showTab('events', this)">Events</button>
+    <button class="tab-button" onclick="showTab('members', this)">Members</button>
+  </nav>
 
- <!-- Dashboard box-->
-  <div class = "dashboard-box">
-    <p id = "welcomeMessage" class = "welcome-text"></p>
+  <!-- Dashboard box -->
+  <div class="dashboard-box">
+    <p id="welcomeMessage" class="welcome-text"></p>
+    <p id="roleMessage" class="role-text"></p>
+    <p id="statusMessage" class="status-text"></p>
 
+    <!-- Home tab -->
+    <section id="home" class="tab-section active-section">
+      <div class="logo-container">
+        <img src="logo.png" alt="CIMS Logo" class="logo" />
+      </div>
+    </section>
 
-    <!-- logo --> 
-    <div class = "logo-container">
-      <img src = "logo.png" alt = "CIMS Logo" class = "logo">
-    </div>
+    <!-- Inventory tab -->
+    <section id="inventory" class="tab-section">
+      <h2>Inventory</h2>
 
-  <!-- tabs --> 
+      <!-- Admin / Board Add Item -->
+      <div id="inventoryManagementControls" class="admin-panel hidden">
+        <h3>Add Item</h3>
 
-  <!-- inventory --> 
-  <!-- events --> 
-  <!-- members --> 
+        <input id="itemName" type="text" placeholder="Product name" />
+        <input id="itemCategory" type="text" placeholder="Category" />
+        <input id="itemLocation" type="text" placeholder="Location" />
+        <input id="itemStock" type="text" placeholder="In Stock" />
+        <input id="itemTotal" type="text" placeholder="Total quantity" />
+        <input id="itemEvent" type="text" placeholder="Assigned event" />
+        <button onclick="addInventoryItem()">Add Item</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>In Stock</th>
+              <th>Total</th>
+              <th>Event</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Events tab -->
+    <section id="events" class="tab-section">
+      <h2>Events</h2>
+
+      <!-- Admin / Board Create Event -->
+      <div id="eventsManagementControls" class="admin-panel hidden">
+        <h3>Create Event</h3>
+        <input id="eventTitle" type="text" placeholder="Event Title" />
+        <input id="eventDate" type="text" placeholder="Date" />
+        <input id="eventTime" type="text" placeholder="Time" />
+        <input id="eventLocation" type="text" placeholder="Location" />
+        <button onclick="addEvent()">Create Event</button>
+      </div>
+
+      <div id="eventsContainer" class="events-grid"></div>
+    </section>
+
+    <!-- Members tab -->
+    <section id="members" class="tab-section">
+      <h2>Members</h2>
+
+      <!-- Admin / Board Add Member -->
+      <div id="membersManagementControls" class="admin-panel hidden">
+        <h3>Add Member</h3>
+        <input id="memberName" type="text" placeholder="Member name" />
+        <select id="memberGroup">
+          <option value="board">Board Members</option>
+          <option value="active">Active Members</option>
+          <option value="admin">Administrators</option>
+        </select>
+        <button onclick="addMember()">Add Member</button>
+      </div>
+
+      <div class="members-columns">
+        <div class="member-box">
+          <h3>Board Members</h3>
+          <ul id="boardMembersList"></ul>
+        </div>
+
+        <div class="member-box">
+          <h3>Active Members</h3>
+          <ul id="activeMembersList"></ul>
+        </div>
+
+        <div class="member-box">
+          <h3>Administrators</h3>
+          <ul id="adminMembersList"></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Logout -->
+  <button class="logout-button" onclick="logout()">Log Out</button>
+
+  <script src="inventory.js"></script>
+  <script src="events.js"></script>
+  <script src="members.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
