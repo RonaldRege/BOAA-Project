@@ -157,12 +157,15 @@ body {
 }
 
 .logo-container {
-  margin-top: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 }
 
 .logo {
-  width: 380px;
-  max-width: 95%;
+  width: 400px;
+  max-width: 100%;
 }
 
 .admin-panel {

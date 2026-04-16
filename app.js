@@ -21,9 +21,9 @@ function checkLogin() {
   }
 
   const users = [
-    { username: "admin", password: "cims123", role: "admin" },
-    { username: "board", password: "board123", role: "board" },
-    { username: "member", password: "member123", role: "member" }
+    { username: "Admin", password: "cims123", role: "Admin" },
+    { username: "Board Member", password: "board123", role: "Board Member" },
+    { username: "Member", password: "member123", role: "Member" }
   ];
 
   // log in page for C.I.M.S.
