@@ -159,7 +159,7 @@ function renderMembers(){
     boardList.appendChild(li);
   });
 
-   membersData.board.forEach((name)=>{
+   membersData.board.forEach(function(name){
     const li = document.createElement("li");
     li.textContent = name;
     activeList.appendChild(li);

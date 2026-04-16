@@ -157,12 +157,12 @@ body {
 }
 
 .logo-container {
-  margin-top: 40px;
+  margin-top: 55px;
 }
 
 .logo {
-  width: 280px;
-  max-width: 90%;
+  width: 360px;
+  max-width: 95%;
 }
 
 .admin-panel {
@@ -219,7 +219,10 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 35px;
+  margin-top: 30;
+  padding: 20px 40px;
+  box-sizing: border-box;
 }
 
 .event-card {
