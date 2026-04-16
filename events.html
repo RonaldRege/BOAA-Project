@@ -11,7 +11,6 @@
 
 <body>
 
-    <h1>Events</h1>
 
     <h1 class="title">C.I.M.S.</h1>
     <p class="subtitle">Club Inventory Management System</p>
@@ -23,7 +22,11 @@
         <a href="members.html" class="tab-button">Members</a>
     </nav>
 
-    <div id="eventsContainer"></div>
+    <div class="dashboard-box">
+        <p id="welcomeMessage" class="welcome-text"></p>
+        <p id="statusMessage" class="status-text"></p>
+
+        <h2 class = "page-heading">Events</h2>
 
     <!-- admin/board create event -->
     <div id="eventsManagementControls" class="admin-panel hidden">
@@ -35,14 +38,13 @@
         <button onclick="addEvent()">Create Event</button>
     </div>
 
-    <p id="statusMessage" class="status-text"></p>
 
     <div id="eventsContainer" class="events-grid"></div>
+
     </div>
 
     <!-- logout -->
     <button class="logout-button" onclick="logout()">Log Out</button>
-
 
     <script src="dashboard.js"></script>
 

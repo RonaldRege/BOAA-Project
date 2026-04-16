@@ -153,19 +153,19 @@ function renderMembers(){
   activeList.innerHTML = "";
   adminList.innerHTML = "";
 
-  membersData.board.forEach((name)=>{
+  membersData.board.forEach((name) => {
     const li = document.createElement("li");
     li.textContent = name;
     boardList.appendChild(li);
   });
 
-   membersData.board.forEach(function(name){
+   membersData.active.forEach((name)=> {
     const li = document.createElement("li");
     li.textContent = name;
     activeList.appendChild(li);
   });
 
-   membersData.board.forEach((name)=>{
+   membersData.admin.forEach((name)=>{
     const li = document.createElement("li");
     li.textContent = name;
     adminList.appendChild(li);
@@ -173,8 +173,8 @@ function renderMembers(){
 }
 
 function addMember() {
-  const name = document.getElementById ("membersName").value.trim();
-  const group = document.getElementById ("membersGroup").value.trim();
+  const name = document.getElementById ("memberName").value.trim();
+  const group = document.getElementById ("memberGroup").value.trim();
 if (name === ""){
   showStatus("Please enter a member name.");
   return;
