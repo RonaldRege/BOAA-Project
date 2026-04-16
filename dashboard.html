@@ -8,11 +8,11 @@
 </head>
 <body>
 
-  <!-- Heading -->
+  <!-- title -->
   <h1 class="title">C.I.M.S.</h1>
   <p class="subtitle">Club Inventory Management System</p>
 
-  <!-- Navigation Bar -->
+  <!-- navigation bar -->
   <nav class="navbar">
     <button class="tab-button active" onclick="showTab('home', this)">Home</button>
     <button class="tab-button" onclick="showTab('inventory', this)">Inventory</button>
@@ -20,24 +20,23 @@
     <button class="tab-button" onclick="showTab('members', this)">Members</button>
   </nav>
 
-  <!-- Dashboard box -->
+  <!-- dashboard box -->
   <div class="dashboard-box">
     <p id="welcomeMessage" class="welcome-text"></p>
-    <p id="roleMessage" class="role-text"></p>
     <p id="statusMessage" class="status-text"></p>
 
-    <!-- Home tab -->
+    <!-- home tab -->
     <section id="home" class="tab-section active-section">
       <div class="logo-container">
         <img src="logo.png" alt="CIMS Logo" class="logo" />
       </div>
     </section>
 
-    <!-- Inventory tab -->
+    <!-- inventory tab -->
     <section id="inventory" class="tab-section">
       <h2>Inventory</h2>
 
-      <!-- Admin / Board Add Item -->
+      <!-- admin/board add item -->
       <div id="inventoryManagementControls" class="admin-panel hidden">
         <h3>Add Item</h3>
 
@@ -68,11 +67,11 @@
       </div>
     </section>
 
-    <!-- Events tab -->
+    <!-- events tab -->
     <section id="events" class="tab-section">
       <h2>Events</h2>
 
-      <!-- Admin / Board Create Event -->
+      <!-- admin/board create event -->
       <div id="eventsManagementControls" class="admin-panel hidden">
         <h3>Create Event</h3>
         <input id="eventTitle" type="text" placeholder="Event Title" />
@@ -85,13 +84,14 @@
       <div id="eventsContainer" class="events-grid"></div>
     </section>
 
-    <!-- Members tab -->
+    <!-- members tab -->
     <section id="members" class="tab-section">
       <h2>Members</h2>
 
-      <!-- Admin / Board Add Member -->
+      <!-- admin/board add member -->
       <div id="membersManagementControls" class="admin-panel hidden">
         <h3>Add Member</h3>
+
         <input id="memberName" type="text" placeholder="Member name" />
         <select id="memberGroup">
           <option value="board">Board Members</option>
@@ -120,7 +120,7 @@
     </section>
   </div>
 
-  <!-- Logout -->
+  <!-- logout -->
   <button class="logout-button" onclick="logout()">Log Out</button>
 
   <script src="inventory.js"></script>
