@@ -1,4 +1,4 @@
-let inventoryData = [ //array to hold inventory objects
+let inventoryData = [ //array to hold inventory objects, not currently integrated properly, formatting copied from events so should be fine
   {
     itemName: "Table",
     qty: 5,
