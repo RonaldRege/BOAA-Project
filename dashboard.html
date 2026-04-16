@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CIMS Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <!-- title -->
@@ -18,7 +20,7 @@
     <a href="inventory.html" class="tab-button">Inventory</a>
     <a href="events.html" class="tab-button">Events</a>
     <a href="members.html" class="tab-button">Members</a>
-  </nav> 
+  </nav>
 
   <!-- dashboard box -->
   <div class="dashboard-box">
@@ -30,102 +32,13 @@
       <div class="logo-container">
         <img src="logo.png" alt="CIMS Logo" class="logo" />
       </div>
-    </section>
-
-    <!-- inventory tab -->
-    <section id="inventory" class="tab-section">
-      <h2>Inventory</h2>
-
-      <!-- admin/board add item -->
-      <div id="inventoryManagementControls" class="admin-panel hidden">
-        <h3>Add Item</h3>
-
-        <input id="itemName" type="text" placeholder="Product name" />
-        <input id="itemCategory" type="text" placeholder="Category" />
-        <input id="itemLocation" type="text" placeholder="Location" />
-        <input id="itemStock" type="text" placeholder="In Stock" />
-        <input id="itemTotal" type="text" placeholder="Total quantity" />
-        <input id="itemEvent" type="text" placeholder="Assigned event" />
-        <button onclick="addInventoryItem()">Add Item</button>
-      </div>
-
-      <div class="table-wrapper">
-        <table class="inventory-table">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Category</th>
-              <th>Location</th>
-              <th>In Stock</th>
-              <th>Total</th>
-              <th>Event</th>
-              <th>Availability</th>
-            </tr>
-          </thead>
-          <tbody id="inventoryTableBody"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- events tab -->
-    <section id="events" class="tab-section">
-      <h2>Events</h2>
-
-      <!-- admin/board create event -->
-      <div id="eventsManagementControls" class="admin-panel hidden">
-        <h3>Create Event</h3>
-        <input id="eventTitle" type="text" placeholder="Event Title" />
-        <input id="eventDate" type="text" placeholder="Date" />
-        <input id="eventTime" type="text" placeholder="Time" />
-        <input id="eventLocation" type="text" placeholder="Location" />
-        <button onclick="addEvent()">Create Event</button>
-      </div>
-
-      <div id="eventsContainer" class="events-grid"></div>
-    </section>
-
-    <!-- members tab -->
-    <section id="members" class="tab-section">
-      <h2>Members</h2>
-
-      <!-- admin/board add member -->
-      <div id="membersManagementControls" class="admin-panel hidden">
-        <h3>Add Member</h3>
-
-        <input id="memberName" type="text" placeholder="Member name" />
-        <select id="memberGroup">
-          <option value="board">Board Members</option>
-          <option value="active">Active Members</option>
-          <option value="admin">Administrators</option>
-        </select>
-        <button onclick="addMember()">Add Member</button>
-      </div>
-
-      <div class="members-columns">
-        <div class="member-box">
-          <h3>Board Members</h3>
-          <ul id="boardMembersList"></ul>
-        </div>
-
-        <div class="member-box">
-          <h3>Active Members</h3>
-          <ul id="activeMembersList"></ul>
-        </div>
-
-        <div class="member-box">
-          <h3>Administrators</h3>
-          <ul id="adminMembersList"></ul>
-        </div>
-      </div>
-    </section>
   </div>
+
 
   <!-- logout -->
   <button class="logout-button" onclick="logout()">Log Out</button>
 
-  <script src="inventory.js"></script>
-  <script src="events.js"></script>
-  <script src="members.js"></script>
   <script src="dashboard.js"></script>
 </body>
+
 </html>

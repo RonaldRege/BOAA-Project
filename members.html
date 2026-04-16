@@ -1,16 +1,69 @@
 <!--members html-->
 
-<h1>Members</h1>
-<nav class="navbar">
-    <a href="dashboard.html" class="tab-button">Home</a>
-    <a href="inventory.html" class="tab-button">Inventory</a>
-    <a href="events.html" class="tab-button">Events</a>
-    <a href="members.html" class="tab-button active">Members</a>
-  </nav> 
+<!DOCTYPE html>
+<html lang="en">
 
-    <ul id="boardMembersList"></ul>
-    <ul id="activeMembersList"></ul>
-    <ul id="adminMembersList"></ul>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Members</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-  <script src = "members.js"></script>
-  <script src = "dashboard.js"></script>
+<body>
+
+    <h1>Members</h1>
+
+    <h1 class="title">C.I.M.S.</h1>
+    <p class="subtitle">Club Inventory Management System</p>
+
+    <nav class="navbar">
+        <a href="dashboard.html" class="tab-button">Home</a>
+        <a href="inventory.html" class="tab-button">Inventory</a>
+        <a href="events.html" class="tab-button">Events</a>
+        <a href="members.html" class="tab-button active">Members</a>
+    </nav>
+
+    <div class="dashboard-box">
+        <h2>Members</h2>
+
+        <div id="membersManagementControls" class="admin-panel hidden">
+            <h3>Add Member</h3>
+
+            <input id="memberName" type="text" placeholder="Member name" />
+            <select id="memberGroup">
+                <option value="board">Board Members</option>
+                <option value="active">Active Members</option>
+                <option value="admin">Administrators</option>
+            </select>
+            <button onclick="addMember()">Add Member</button>
+        </div>
+
+        <p id="statusMessage" class="status-text"></p>
+
+        <div class="members-columns">
+            <div class="member-box">
+                <h3>Board Members</h3>
+                <ul id="boardMembersList"></ul>
+            </div>
+
+            <div class="member-box">
+                <h3>Active Members</h3>
+                <ul id="activeMembersList"></ul>
+            </div>
+
+            <div class="member-box">
+                <h3>Administrators</h3>
+                <ul id="adminMembersList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- logout -->
+    <button class="logout-button" onclick="logout()">Log Out</button>
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

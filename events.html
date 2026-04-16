@@ -1,14 +1,51 @@
 <!--event html-->
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Events</h1>
-<nav class="navbar">
-    <a href="dashboard.html" class="tab-button">Home</a>
-    <a href="inventory.html" class="tab-button">Inventory</a>
-    <a href="events.html" class="tab-button active">Events</a>
-    <a href="members.html" class="tab-button">Members</a>
-  </nav> 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-  <div id = "eventsContainer"></div>
+<body>
 
-  <script src = "events.js"></script>
-  <script src = "dashboard.js"></script>
+    <h1>Events</h1>
+
+    <h1 class="title">C.I.M.S.</h1>
+    <p class="subtitle">Club Inventory Management System</p>
+
+    <nav class="navbar">
+        <a href="dashboard.html" class="tab-button">Home</a>
+        <a href="inventory.html" class="tab-button">Inventory</a>
+        <a href="events.html" class="tab-button active">Events</a>
+        <a href="members.html" class="tab-button">Members</a>
+    </nav>
+
+    <div id="eventsContainer"></div>
+
+    <!-- admin/board create event -->
+    <div id="eventsManagementControls" class="admin-panel hidden">
+        <h3>Create Event</h3>
+        <input id="eventTitle" type="text" placeholder="Event Title" />
+        <input id="eventDate" type="text" placeholder="Date" />
+        <input id="eventTime" type="text" placeholder="Time" />
+        <input id="eventLocation" type="text" placeholder="Location" />
+        <button onclick="addEvent()">Create Event</button>
+    </div>
+
+    <p id="statusMessage" class="status-text"></p>
+
+    <div id="eventsContainer" class="events-grid"></div>
+    </div>
+
+    <!-- logout -->
+    <button class="logout-button" onclick="logout()">Log Out</button>
+
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

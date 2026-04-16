@@ -1,18 +1,72 @@
-
 <!--inventory html-->
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Inventory</h1>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-<nav class="navbar">
-    <a href="dashboard.html" class="tab-button">Home</a>
-    <a href="inventory.html" class="tab-button active">Inventory</a>
-    <a href="events.html" class="tab-button">Events</a>
-    <a href="members.html" class="tab-button">Members</a>
-  </nav> 
+<body>
 
-  <table>
-    <tbody id= "inventroyTableBody"></tbody>
-  </table>
+    <h1>Inventory</h1>
 
-  <script src = "inventory.js"></script>
-  <script src = "dashboard.js"></script>
+    <h1 class="title">C.I.M.S.</h1>
+    <p class="subtitle">Club Inventory Management System</p>
+
+    <nav class="navbar">
+        <a href="dashboard.html" class="tab-button">Home</a>
+        <a href="inventory.html" class="tab-button active">Inventory</a>
+        <a href="events.html" class="tab-button">Events</a>
+        <a href="members.html" class="tab-button">Members</a>
+    </nav>
+
+    <div class="dashboard-box">
+    <p id="welcomeMessage" class="welcome-text"></p>
+    <p id="statusMessage" class="status-text"></p>
+
+    <h2 class="page-heading">Inventory</h2>
+
+
+        <div id="inventoryManagementControls" class="admin-panel hidden">
+            <h3>Add Item</h3>
+            <input id="itemName" type="text" placeholder="Product name" />
+            <input id="itemCategory" type="text" placeholder="Category" />
+            <input id="itemLocation" type="text" placeholder="Location" />
+            <input id="itemStock" type="text" placeholder="In Stock" />
+            <input id="itemTotal" type="text" placeholder="Total quantity" />
+            <input id="itemEvent" type="text" placeholder="Assigned event" />
+            <button onclick="addInventoryItem()">Add Item</button>
+        </div>
+
+       
+
+        <div class="table-wrapper">
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Location</th>
+                        <th>In Stock</th>
+                        <th>Total</th>
+                        <th>Event</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- logout -->
+    <button class="logout-button" onclick="logout()">Log Out</button>
+
+    <script src="inventory.js"></script>
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>
