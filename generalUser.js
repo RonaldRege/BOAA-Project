@@ -1,17 +1,3 @@
-let inventoryData = [ //array to hold inventory objects, not currently integrated properly, formatting copied from events so should be fine
-  {
-    itemName: "Table",
-    qty: 5,
-    availableQty: 3,
-  },
-
-  {
-    itemName: "Chair",
-    qty: 4,
-    availableQty: 4,
-  }
-];
-
 function checkOut(studentID, itemName) {
     let permit = checkPermission();
     if (permit) {
