@@ -1,5 +1,7 @@
 // inventory.js
 
+
+// example inventory
 let inventoryData = [
   {
     product: "Table Cloth",
@@ -19,6 +21,8 @@ let inventoryData = [
   }
 ];
 
+// in stock message - not working
+
 function getAvailability(item) {
   if (item.inStock === 0) {
     return "Out of Stock";
@@ -29,6 +33,7 @@ function getAvailability(item) {
   }
 }
 
+// show all items in table
 function renderInventory() {
   const tableBody = document.getElementById("inventoryTableBody");
   tableBody.innerHTML = "";
@@ -49,6 +54,8 @@ function renderInventory() {
     tableBody.appendChild(row);
   });
 }
+
+// add new item 
 
 function addInventoryItem() {
   const product = document.getElementById("itemName").value.trim();
@@ -75,6 +82,7 @@ function addInventoryItem() {
   showStatus("Inventory item added.");
   renderInventory();
 
+  // clear the fill in form boxes
   document.getElementById("itemName").value = "";
   document.getElementById("itemCategory").value = "";
   document.getElementById("itemLocation").value = "";
@@ -83,6 +91,4 @@ function addInventoryItem() {
   document.getElementById("itemEvent").value = "";
 }
 
-//if(typeof renderInventory === "function") {
- // renderInventory();
-//}
+ renderInventory();

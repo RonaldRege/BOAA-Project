@@ -12,12 +12,16 @@ function renderMembers(){
   const activeList = document.getElementById("activeMembersList");
   const adminList = document.getElementById("adminMembersList");
 
+  // if there is no list
   if (!boardList || !activeList || !adminList) return;
 
+
+  // clears old list items 
   boardList.innerHTML = "";
   activeList.innerHTML = "";
   adminList.innerHTML = "";
 
+  // add members
   membersData.board.forEach((name) => {
     const li = document.createElement("li");
     li.textContent = name;
