@@ -1,4 +1,5 @@
-// log in page for C.I.M.S.
+// was app.js now its login.js
+//log in page for C.I.M.S.
 //authentication
 
 function checkLogin() {

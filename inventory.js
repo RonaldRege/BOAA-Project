@@ -82,3 +82,7 @@ function addInventoryItem() {
   document.getElementById("itemTotal").value = "";
   document.getElementById("itemEvent").value = "";
 }
+
+//if(typeof renderInventory === "function") {
+ // renderInventory();
+//}
