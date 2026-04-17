@@ -3,7 +3,7 @@ function checkOut(studentID, itemName) {
     if (permit) {
         requestOut();
         newQuantity = availableQty - itemOut;
-        
+
         recordCheckOut();
     }
     else {
@@ -12,7 +12,7 @@ function checkOut(studentID, itemName) {
     }
 }
 
-function requestOut(availableQty){
+function requestOut(availableQty) {
     itemOut = prompt("How many would you like to check out?");
     //itemOut = 1; // Currently set to check out 1 item at a time, modify to check out multiple (check for +, whole number, and <= available)
     if (itemOut < 0) {

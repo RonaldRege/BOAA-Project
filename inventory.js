@@ -122,7 +122,7 @@ function addInventoryItem() {
 
   renderInventory();
   showStatus("Inventory item added.");
-  
+
 }
 
 function openCheckout(index) {

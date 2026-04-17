@@ -23,10 +23,10 @@
     </nav>
 
     <div class="dashboard-box">
-    <p id="welcomeMessage" class="welcome-text"></p>
-    <p id="statusMessage" class="status-text"></p>
+        <p id="welcomeMessage" class="welcome-text"></p>
+        <p id="statusMessage" class="status-text"></p>
 
-    <h2 class="page-heading">Inventory</h2>
+        <h2 class="page-heading">Inventory</h2>
 
 
         <div id="inventoryManagementControls" class="admin-panel hidden">
@@ -40,15 +40,15 @@
             <button onclick="addInventoryItem()">Add Item</button>
         </div>
 
-       
-            <!--checkout page-->
-<p id = "lowStockMessage" class = "status-text"></p>
-<div id="checkoutPanel" class = "admin-panel hidden">
-    <h3>Check Out Item</h3>
-    <p id="checkoutItemName"></p>
-    <input id="checkoutQty" type="number" placeholder="Quantity"/>
-    <button onclick="confirmCheckout()">Confirm Checkout</button>
-</div> 
+
+        <!--checkout page-->
+        <p id="lowStockMessage" class="status-text"></p>
+        <div id="checkoutPanel" class="admin-panel hidden">
+            <h3>Check Out Item</h3>
+            <p id="checkoutItemName"></p>
+            <input id="checkoutQty" type="number" placeholder="Quantity" />
+            <button onclick="confirmCheckout()">Confirm Checkout</button>
+        </div>
 
         <div class="table-wrapper">
             <table class="inventory-table">
@@ -70,7 +70,7 @@
     </div>
 
 
- 
+
     <!-- logout -->
     <button class="logout-button" onclick="logout()">Log Out</button>
 

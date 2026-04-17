@@ -90,9 +90,9 @@ function checkLogin() {
   */
   //
 
-  const foundUser = users.find(function(account) {
+  const foundUser = users.find(function (account) {
     return account.username === user && account.password === pass
-});
+  });
 
   if (foundUser) {
     sessionStorage.setItem("loggedIn", "true");

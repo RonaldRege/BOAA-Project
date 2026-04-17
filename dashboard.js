@@ -33,15 +33,15 @@ function applyRolePermissions() { //search for page elements by ID
     const membersControls = document.getElementById("membersManagementControls");
 
     // if the section exist on the page then remove the hidden class so it can be visable 
-    if (inventoryControls){
+    if (inventoryControls) {
       inventoryControls.classList.remove("hidden");
     }
 
-    if (eventsControls){
+    if (eventsControls) {
       eventsControls.classList.remove("hidden");
     }
 
-    if (membersControls){
+    if (membersControls) {
       membersControls.classList.remove("hidden");
     }
   }
