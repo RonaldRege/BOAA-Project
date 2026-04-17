@@ -2,7 +2,7 @@
 
 
 // example inventory
-let inventoryData = [
+let inventoryData = JSON.parse(localStorage.getItem("inventoryData"))||[
   {
     product: "Table Cloth",
     category: "Decor",
@@ -89,6 +89,8 @@ function addInventoryItem() {
   document.getElementById("itemStock").value = "";
   document.getElementById("itemTotal").value = "";
   document.getElementById("itemEvent").value = "";
+
+  localStorage.setItem("inventoryData",JSON.stringify(inventoryData));
 }
 
  renderInventory();

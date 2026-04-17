@@ -3,7 +3,7 @@
 
 // sample events 
 
-let eventsData = [ //array to hold event objects
+let eventsData =JSON.parse(localStorage.getItem("eventsData")) || [ //array to hold event objects
   {
     title: "Open House",
     date: "April 20, 2026",
@@ -70,6 +70,8 @@ function addEvent() {
   // reders event and message
   renderEvents();
   showStatus("Events added.");
+
+  localStorage.setItem("eventsData",JSON.stringify(eventsData));
 } 
 
 // delete event from array by position
@@ -77,6 +79,8 @@ function deleteEvent(index) {
     eventsData.splice(index,1);
     renderEvents();
     showStatus("Event deleted.");
+
+     localStorage.setItem("eventsData",JSON.stringify(eventsData));
 }
 
 // edit title 
@@ -89,6 +93,8 @@ function editEvent(index){
     event.title = newTitle;
     renderEvents();
     showStatus("Event added.");
+
+     localStorage.setItem("eventsData",JSON.stringify(eventsData));
 }
 
 renderEvents();

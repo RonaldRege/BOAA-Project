@@ -1,6 +1,6 @@
 // member.js instead of all the info being in the dashboard
 
-let membersData = {
+let membersData = JSON.parse(localStorage.getItem("membersData")) || {
   board: ["John Smith", "Tom Bark"],
   active: ["Mike Jordan", "Luis Hank"],
   admin: ["Prof Jacobs"]
@@ -26,6 +26,8 @@ function renderMembers(){
     const li = document.createElement("li");
     li.textContent = name;
     boardList.appendChild(li);
+
+    localStorage.setItem("membersData",JSON.stringify(membersData));
   });
 
    membersData.active.forEach((name)=> {
