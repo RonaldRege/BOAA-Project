@@ -30,6 +30,14 @@ function renderEvents(){ // draws events on the page
     const card = document.createElement("div"); // create a new div for one event card and give it a class name 
     card.className="event-card";
 
+    let actions = "";
+
+if (role === "admin" || role === "board") {
+  actions = `
+    <button onclick="editEvent(${index})">Edit</button>
+    <button onclick="deleteEvent(${index})">Delete</button>
+  `;
+}
 
     // fills the event card with HTML
     //$ insert JS values into the HTML string
@@ -38,9 +46,7 @@ function renderEvents(){ // draws events on the page
       <p><strong>Date:</strong> ${event.date}</p> 
       <p><strong>Time:</strong> ${event.time}</p>
       <p><strong>Location:</strong> ${event.location}</p>
-
-      <button onclick ="editEvent(${index})">Edit</button>
-      <button onclick ="deleteEvent(${index})">Delete</button>
+      ${actions}
     `;
 
     container.appendChild(card); //adds new card

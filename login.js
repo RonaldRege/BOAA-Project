@@ -22,9 +22,9 @@ function checkLogin() {
   }
 
   const users = [
-    { username: "Admin", password: "cims123", role: "Admin" },
-    { username: "Board Member", password: "board123", role: "Board Member" },
-    { username: "Member", password: "member123", role: "Member" }
+    { username: "Admin", password: "cims123", role: "admin" },
+    { username: "Board Member", password: "board123", role: "board" },
+    { username: "Member", password: "member123", role: "member" }
   ];
 
   // log in page for C.I.M.S.
@@ -97,7 +97,7 @@ function checkLogin() {
   if (foundUser) {
     sessionStorage.setItem("loggedIn", "true");
     sessionStorage.setItem("username", user);
-    sessionStorage.setItem("role", "admin");
+    sessionStorage.setItem("role", foundUser.role.toLowerCase());
     window.location.href = "dashboard.html";
   } else {
     errorMessage.textContent = "Wrong username or password. Please try again";

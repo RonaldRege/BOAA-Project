@@ -20,7 +20,7 @@ function canManage() {
 // welcome text and access level
 function applyRolePermissions() { //search for page elements by ID
   const welcomeMessage = document.getElementById("welcomeMessage");
-  const roleMessage = document.getElementById("roleMessage");
+  //const roleMessage = document.getElementById("roleMessage");
 
   if (welcomeMessage && username) {
     welcomeMessage.textContent = "Hello " + username + "!";
