@@ -41,6 +41,14 @@
         </div>
 
        
+            <!--checkout page-->
+<p id = "lowStockMessage" class = "status-text"></p>
+<div id="checkoutPanel" class = "admin-panel hidden">
+    <h3>Check Out Item</h3>
+    <p id="checkoutItemName"></p>
+    <input id="checkoutQty" type="number" placeholder="Quantity"/>
+    <button onclick="confirmCheckout()">Confirm Checkout</button>
+</div> 
 
         <div class="table-wrapper">
             <table class="inventory-table">
@@ -61,6 +69,8 @@
         </div>
     </div>
 
+
+ 
     <!-- logout -->
     <button class="logout-button" onclick="logout()">Log Out</button>
 

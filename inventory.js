@@ -1,7 +1,5 @@
 // inventory.js
 
-
-// example inventory
 let inventoryData = JSON.parse(localStorage.getItem("inventoryData")) || [
   {
     product: "Table Cloth",
@@ -9,7 +7,8 @@ let inventoryData = JSON.parse(localStorage.getItem("inventoryData")) || [
     location: "Storage Closet",
     inStock: 4,
     total: 6,
-    event: "Open House"
+    event: "Open House",
+    reserved: false
   },
   {
     product: "Folding Table",
@@ -17,11 +16,13 @@ let inventoryData = JSON.parse(localStorage.getItem("inventoryData")) || [
     location: "Room 102",
     inStock: 2,
     total: 2,
-    event: "Club Meeting"
+    event: "Club Meeting",
+    reserved: false
   }
 ];
 
-// in stock message - not working
+let checkoutRecords = JSON.parse(localStorage.getItem("checkoutRecords")) || [];
+let selectedCheckoutIndex = null;
 
 function getAvailability(item) {
   if (item.inStock === 0) {
@@ -33,7 +34,16 @@ function getAvailability(item) {
   }
 }
 
-// show all items in table
+function canManageInventory() {
+  const role = sessionStorage.getItem("role") || "member";
+  return role === "admin" || role === "board";
+}
+
+function canCheckoutItems() {
+  const role = sessionStorage.getItem("role") || "member";
+  return role === "admin" || role === "board" || role === "member";
+}
+
 function renderInventory() {
   const tableBody = document.getElementById("inventoryTableBody");
   if (!tableBody) return;
@@ -47,11 +57,13 @@ function renderInventory() {
 
     let actions = "";
 
+    if (canCheckoutItems()) {
+      actions += `<button onclick="openCheckout(${index})">Check Out</button> `;
+    }
+
     if (role === "admin" || role === "board") {
-      actions = `
-        <button onclick="editInventoryItem(${index})">Edit</button>
-        <button onclick="deleteInventoryItem(${index})">Delete</button>
-      `;
+      actions += `<button onclick="editInventoryItem(${index})">Edit</button> `;
+      actions += `<button onclick="deleteInventoryItem(${index})">Delete</button>`;
     }
 
     row.innerHTML = `
@@ -67,9 +79,9 @@ function renderInventory() {
 
     tableBody.appendChild(row);
   });
-}
 
-// add new item 
+  showLowStockAlert(role);
+}
 
 function addInventoryItem() {
   const product = document.getElementById("itemName").value.trim();
@@ -95,13 +107,12 @@ function addInventoryItem() {
     location: location,
     inStock: Number(inStock),
     total: Number(total),
-    event: event
+    event: event,
+    reserved: false
   });
 
   localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
 
-
-  // clear the fill in form boxes
   document.getElementById("itemName").value = "";
   document.getElementById("itemCategory").value = "";
   document.getElementById("itemLocation").value = "";
@@ -109,8 +120,106 @@ function addInventoryItem() {
   document.getElementById("itemTotal").value = "";
   document.getElementById("itemEvent").value = "";
 
-  showStatus("Inventory item added.");
   renderInventory();
+  showStatus("Inventory item added.");
+  
+}
+
+function openCheckout(index) {
+  const item = inventoryData[index];
+
+  if (item.reserved === true) {
+    showStatus("This item is reserved for an event and cannot be checked out.");
+    return;
+  }
+
+  selectedCheckoutIndex = index;
+
+  const checkoutPanel = document.getElementById("checkoutPanel");
+  const checkoutItemName = document.getElementById("checkoutItemName");
+  const checkoutQty = document.getElementById("checkoutQty");
+
+  if (checkoutPanel && checkoutItemName && checkoutQty) {
+    checkoutPanel.classList.remove("hidden");
+    checkoutItemName.textContent = "Item: " + item.product;
+    checkoutQty.value = "";
+  }
+}
+
+function confirmCheckout() {
+  if (selectedCheckoutIndex === null) {
+    showStatus("Please select an item to check out.");
+    return;
+  }
+
+  const item = inventoryData[selectedCheckoutIndex];
+  const qtyInput = document.getElementById("checkoutQty");
+  const username = sessionStorage.getItem("username") || "Unknown User";
+
+  if (!qtyInput) return;
+
+  const qty = Number(qtyInput.value);
+
+  if (qtyInput.value.trim() === "" || isNaN(qty)) {
+    showStatus("Quantity must be a number.");
+    return;
+  }
+
+  if (!Number.isInteger(qty) || qty <= 0) {
+    showStatus("Quantity must be a whole number greater than 0.");
+    return;
+  }
+
+  if (qty > item.inStock) {
+    showStatus("Quantity cannot exceed stock.");
+    return;
+  }
+
+  if (item.reserved === true) {
+    showStatus("This item is reserved for an event.");
+    return;
+  }
+
+  checkoutRecords.push({
+    user: username,
+    item: item.product,
+    quantity: qty,
+    timestamp: new Date().toLocaleString()
+  });
+
+  item.inStock = item.inStock - qty;
+
+  localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
+  localStorage.setItem("checkoutRecords", JSON.stringify(checkoutRecords));
+
+  const checkoutPanel = document.getElementById("checkoutPanel");
+  if (checkoutPanel) {
+    checkoutPanel.classList.add("hidden");
+  }
+
+  selectedCheckoutIndex = null;
+
+  renderInventory();
+  showStatus("Item successfully checked out.");
+}
+
+function showLowStockAlert(role) {
+  const lowStockMessage = document.getElementById("lowStockMessage");
+  if (!lowStockMessage) return;
+
+  if (role !== "admin" && role !== "board") {
+    lowStockMessage.textContent = "";
+    return;
+  }
+
+  const lowItems = inventoryData.filter(item => item.inStock <= 1);
+
+  if (lowItems.length > 0) {
+    const names = lowItems.map(item => item.product).join(", ");
+    lowStockMessage.textContent = "Low stock alert: " + names;
+  } else {
+    lowStockMessage.textContent = "";
+  }
 }
 
 function editInventoryItem(index) {
@@ -125,10 +234,10 @@ function editInventoryItem(index) {
   const newLocation = prompt("Edit location name:", item.location);
   if (newLocation === null) return;
 
-  const newInStock = prompt("Edit in stock name:", item.inStock);
+  const newInStock = prompt("Edit in stock quantity:", item.inStock);
   if (newInStock === null) return;
 
-  const newTotal = prompt("Edit total name:", item.total);
+  const newTotal = prompt("Edit total quantity:", item.total);
   if (newTotal === null) return;
 
   const newEvent = prompt("Edit event name:", item.event);
@@ -144,6 +253,7 @@ function editInventoryItem(index) {
     showStatus("Please fill in all required fields.");
     return;
   }
+
   if (isNaN(newInStock) || isNaN(newTotal)) {
     showStatus("In Stock and Total must be numbers.");
     return;
@@ -158,21 +268,18 @@ function editInventoryItem(index) {
 
   localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
 
-  renderInventory()
+  renderInventory();
   showStatus("Item updated.");
 }
 
 function deleteInventoryItem(index) {
   const confirmDelete = confirm("Are you sure you want to delete this item?");
-
-  if (!confirmDelete) {
-    return;
-  }
+  if (!confirmDelete) return;
 
   inventoryData.splice(index, 1);
   localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
 
-  renderInventory()
+  renderInventory();
   showStatus("Item deleted.");
 }
 
