@@ -2,7 +2,7 @@
 
 
 // example inventory
-let inventoryData = JSON.parse(localStorage.getItem("inventoryData"))||[
+let inventoryData = JSON.parse(localStorage.getItem("inventoryData")) || [
   {
     product: "Table Cloth",
     category: "Decor",
@@ -36,10 +36,23 @@ function getAvailability(item) {
 // show all items in table
 function renderInventory() {
   const tableBody = document.getElementById("inventoryTableBody");
+  if (!tableBody) return;
+
+  const role = sessionStorage.getItem("role") || "member";
+
   tableBody.innerHTML = "";
 
-  inventoryData.forEach((item) => {
+  inventoryData.forEach((item, index) => {
     const row = document.createElement("tr");
+
+    let actions = "";
+
+    if (role === "admin" || role === "board") {
+      actions = `
+        <button onclick="editInventoryItem(${index})">Edit</button>
+        <button onclick="deleteInventoryItem(${index})">Delete</button>
+      `;
+    }
 
     row.innerHTML = `
       <td>${item.product}</td>
@@ -49,6 +62,7 @@ function renderInventory() {
       <td>${item.total}</td>
       <td>${item.event}</td>
       <td>${getAvailability(item)}</td>
+      <td>${actions}</td>
     `;
 
     tableBody.appendChild(row);
@@ -70,6 +84,11 @@ function addInventoryItem() {
     return;
   }
 
+  if (isNaN(inStock) || isNaN(total)) {
+    showStatus("In Stock and Total must be numbers.");
+    return;
+  }
+
   inventoryData.push({
     product: product,
     category: category,
@@ -79,8 +98,8 @@ function addInventoryItem() {
     event: event
   });
 
-  showStatus("Inventory item added.");
-  renderInventory();
+  localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
+
 
   // clear the fill in form boxes
   document.getElementById("itemName").value = "";
@@ -90,7 +109,71 @@ function addInventoryItem() {
   document.getElementById("itemTotal").value = "";
   document.getElementById("itemEvent").value = "";
 
-  localStorage.setItem("inventoryData",JSON.stringify(inventoryData));
+  showStatus("Inventory item added.");
+  renderInventory();
 }
 
- renderInventory();
+function editInventoryItem(index) {
+  const item = inventoryData[index];
+
+  const newProduct = prompt("Edit product name:", item.product);
+  if (newProduct === null) return;
+
+  const newCategory = prompt("Edit category name:", item.category);
+  if (newCategory === null) return;
+
+  const newLocation = prompt("Edit location name:", item.location);
+  if (newLocation === null) return;
+
+  const newInStock = prompt("Edit in stock name:", item.inStock);
+  if (newInStock === null) return;
+
+  const newTotal = prompt("Edit total name:", item.total);
+  if (newTotal === null) return;
+
+  const newEvent = prompt("Edit event name:", item.event);
+  if (newEvent === null) return;
+
+  if (
+    newProduct.trim() === "" ||
+    newCategory.trim() === "" ||
+    newLocation.trim() === "" ||
+    newInStock.trim() === "" ||
+    newTotal.trim() === ""
+  ) {
+    showStatus("Please fill in all required fields.");
+    return;
+  }
+  if (isNaN(newInStock) || isNaN(newTotal)) {
+    showStatus("In Stock and Total must be numbers.");
+    return;
+  }
+
+  item.product = newProduct.trim();
+  item.category = newCategory.trim();
+  item.location = newLocation.trim();
+  item.inStock = Number(newInStock);
+  item.total = Number(newTotal);
+  item.event = newEvent.trim();
+
+  localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
+
+  renderInventory()
+  showStatus("Item updated.");
+}
+
+function deleteInventoryItem(index) {
+  const confirmDelete = confirm("Are you sure you want to delete this item?");
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  inventoryData.splice(index, 1);
+  localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
+
+  renderInventory()
+  showStatus("Item deleted.");
+}
+
+renderInventory();
