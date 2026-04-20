@@ -7,8 +7,7 @@ let inventoryData = JSON.parse(localStorage.getItem("inventoryData")) || [
     location: "Storage Closet",
     inStock: 4,
     total: 6,
-    event: "Open House",
-    reserved: false
+    event: "Open House"
   },
   {
     product: "Folding Table",
@@ -16,8 +15,7 @@ let inventoryData = JSON.parse(localStorage.getItem("inventoryData")) || [
     location: "Room 102",
     inStock: 2,
     total: 2,
-    event: "Club Meeting",
-    reserved: false
+    event: "Club Meeting"
   }
 ];
 
@@ -49,7 +47,6 @@ function renderInventory() {
   if (!tableBody) return;
 
   const role = sessionStorage.getItem("role") || "member";
-
   tableBody.innerHTML = "";
 
   inventoryData.forEach((item, index) => {
@@ -59,6 +56,7 @@ function renderInventory() {
 
     if (canCheckoutItems()) {
       actions += `<button onclick="openCheckout(${index})">Check Out</button> `;
+      actions += `<button onclick="openReturn(${index})">Return</button> `;
     }
 
     if (role === "admin" || role === "board") {
@@ -99,20 +97,17 @@ function addInventoryItem() {
   const inStockNum = Number(inStock);
   const totalNum = Number(total);
 
-  // check if its not a number
   if (isNaN(inStockNum) || isNaN(totalNum)) {
     showStatus("In Stock and Total must be numbers.");
     return;
   }
 
-  //check if whole number 
-  if (!Number.isInteger(inStockNum) || !Number.isInteger(totalNum)){
+  if (!Number.isInteger(inStockNum) || !Number.isInteger(totalNum)) {
     showStatus("Please enter whole numbers only.");
     return;
   }
 
-  // check for negatives 
-  if (inStockNum < 0 || totalNum < 0){
+  if (inStockNum < 0 || totalNum < 0) {
     showStatus("Numbers cannot be negative.");
     return;
   }
@@ -123,8 +118,7 @@ function addInventoryItem() {
     location: location,
     inStock: inStockNum,
     total: totalNum,
-    event: event,
-    reserved: false
+    event: event
   });
 
   localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
@@ -138,19 +132,12 @@ function addInventoryItem() {
 
   renderInventory();
   showStatus("Inventory item added.");
-
 }
 
 function openCheckout(index) {
-  const item = inventoryData[index];
-
-  if (item.reserved === true) {
-    showStatus("This item is reserved for an event and cannot be checked out.");
-    return;
-  }
-
   selectedCheckoutIndex = index;
 
+  const item = inventoryData[index];
   const checkoutPanel = document.getElementById("checkoutPanel");
   const checkoutItemName = document.getElementById("checkoutItemName");
   const checkoutQty = document.getElementById("checkoutQty");
@@ -164,15 +151,16 @@ function openCheckout(index) {
 
 function confirmCheckout() {
   if (selectedCheckoutIndex === null) {
-    showStatus("Please select an item to check out.");
+    showStatus("Please select an item.");
     return;
   }
 
   const item = inventoryData[selectedCheckoutIndex];
   const qtyInput = document.getElementById("checkoutQty");
+  const checkoutPanel = document.getElementById("checkoutPanel");
   const username = sessionStorage.getItem("username") || "Unknown User";
 
-  if (!qtyInput) return;
+  if (!qtyInput || !checkoutPanel) return;
 
   const qty = Number(qtyInput.value);
 
@@ -191,32 +179,91 @@ function confirmCheckout() {
     return;
   }
 
-  if (item.reserved === true) {
-    showStatus("This item is reserved for an event.");
-    return;
-  }
+  item.inStock = item.inStock - qty;
 
   checkoutRecords.push({
     user: username,
     item: item.product,
     quantity: qty,
+    action: "checkout",
     timestamp: new Date().toLocaleString()
   });
-
-  item.inStock = item.inStock - qty;
 
   localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
   localStorage.setItem("checkoutRecords", JSON.stringify(checkoutRecords));
 
-  const checkoutPanel = document.getElementById("checkoutPanel");
-  if (checkoutPanel) {
-    checkoutPanel.classList.add("hidden");
-  }
-
+  checkoutPanel.classList.add("hidden");
+  qtyInput.value = "";
   selectedCheckoutIndex = null;
 
   renderInventory();
   showStatus("Item successfully checked out.");
+}
+
+function openReturn(index) {
+  selectedCheckoutIndex = index;
+
+  const item = inventoryData[index];
+  const returnPanel = document.getElementById("returnPanel");
+  const returnItemName = document.getElementById("returnItemName");
+  const returnQty = document.getElementById("returnQty");
+
+  if (returnPanel && returnItemName && returnQty) {
+    returnPanel.classList.remove("hidden");
+    returnItemName.textContent = "Item: " + item.product;
+    returnQty.value = "";
+  }
+}
+
+function confirmReturn() {
+  if (selectedCheckoutIndex === null) {
+    showStatus("Please select an item.");
+    return;
+  }
+
+  const item = inventoryData[selectedCheckoutIndex];
+  const qtyInput = document.getElementById("returnQty");
+  const returnPanel = document.getElementById("returnPanel");
+  const username = sessionStorage.getItem("username") || "Unknown User";
+
+  if (!qtyInput || !returnPanel) return;
+
+  const qty = Number(qtyInput.value);
+
+  if (qtyInput.value.trim() === "" || isNaN(qty)) {
+    showStatus("Quantity must be a number.");
+    return;
+  }
+
+  if (!Number.isInteger(qty) || qty <= 0) {
+    showStatus("Quantity must be a whole number greater than 0.");
+    return;
+  }
+
+  if (item.inStock + qty > item.total) {
+    showStatus("Return quantity cannot exceed total stock.");
+    return;
+  }
+
+  item.inStock = item.inStock + qty;
+
+  checkoutRecords.push({
+    user: username,
+    item: item.product,
+    quantity: qty,
+    action: "return",
+    timestamp: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("inventoryData", JSON.stringify(inventoryData));
+  localStorage.setItem("checkoutRecords", JSON.stringify(checkoutRecords));
+
+  returnPanel.classList.add("hidden");
+  qtyInput.value = "";
+  selectedCheckoutIndex = null;
+
+  renderInventory();
+  showStatus("Item successfully returned.");
 }
 
 function showLowStockAlert(role) {

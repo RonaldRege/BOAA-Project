@@ -40,14 +40,21 @@
             <button onclick="addInventoryItem()">Add Item</button>
         </div>
 
-
+<p id="lowStockMessage" class = "status-text"></p>
         <!--checkout page-->
-        <p id="lowStockMessage" class="status-text"></p>
         <div id="checkoutPanel" class="admin-panel hidden">
             <h3>Check Out Item</h3>
             <p id="checkoutItemName"></p>
             <input id="checkoutQty" type="number" placeholder="Quantity" /> <!-- makes it where it can only be a number inputed -->
             <button onclick="confirmCheckout()">Confirm Checkout</button>
+        </div>
+
+         <!--return page-->
+        <div id="returnPanel" class="admin-panel hidden">
+            <h3>Return Item</h3>
+            <p id="returnItemName"></p>
+            <input id="returnQty" type="number" placeholder="Quantity" /> <!-- makes it where it can only be a number inputed -->
+            <button onclick="confirmReturn()">Confirm Return</button>
         </div>
 
         <div class="table-wrapper">
