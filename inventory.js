@@ -96,8 +96,24 @@ function addInventoryItem() {
     return;
   }
 
-  if (isNaN(inStock) || isNaN(total)) {
+  const inStockNum = Number(inStock);
+  const totalNum = Number(total);
+
+  // check if its not a number
+  if (isNaN(inStockNum) || isNaN(totalNum)) {
     showStatus("In Stock and Total must be numbers.");
+    return;
+  }
+
+  //check if whole number 
+  if (!Number.isInteger(inStockNum) || !Number.isInteger(totalNum)){
+    showStatus("Please enter whole numbers only.");
+    return;
+  }
+
+  // check for negatives 
+  if (inStockNum < 0 || totalNum < 0){
+    showStatus("Numbers cannot be negative.");
     return;
   }
 
@@ -105,8 +121,8 @@ function addInventoryItem() {
     product: product,
     category: category,
     location: location,
-    inStock: Number(inStock),
-    total: Number(total),
+    inStock: inStockNum,
+    total: totalNum,
     event: event,
     reserved: false
   });
