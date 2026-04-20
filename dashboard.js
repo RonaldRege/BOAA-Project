@@ -7,7 +7,7 @@ const role = sessionStorage.getItem("role") || "member"; // if no role exist def
 
 // check 
 if (loggedIn !== "true") {
-  window.location.href = "index.html";
+  window.location.href = "login.html";
 }
 
 // admin/board 
@@ -67,7 +67,7 @@ function logout() {
   sessionStorage.removeItem("loggedIn");
   sessionStorage.removeItem("username");
   sessionStorage.removeItem("role");
-  window.location.href = "index.html";
+  window.location.href = "login.html";
 }
 // runs when page loads 
 applyRolePermissions();
