@@ -108,5 +108,7 @@ function deleteMember(group, index) {
   renderMembers();
   showStatus("Member deleted.");
 }
-
+if (!localStorage.getItem("membersData")) {
+  localStorage.setItem("membersData", JSON.stringify(membersData));
+}
 renderMembers();

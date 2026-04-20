@@ -1,37 +1,73 @@
-// events.js so that it will only run event stuff instead of the dashboard
+// events.js
 
-// sample events
-let eventsData = JSON.parse(localStorage.getItem("eventsData")) || [ // array to hold event objects
+let eventsData = JSON.parse(localStorage.getItem("eventsData")) || [
   {
     title: "Open House",
     date: "April 20, 2026",
     time: "3:00 PM",
-    location: "Student Union"
+    location: "Student Union",
+    members: []
   },
-
   {
     title: "Club Meeting",
     date: "April 22, 2026",
     time: "6:00 PM",
-    location: "Room 102"
+    location: "Room 102",
+    members: []
   }
 ];
 
-// gets role
+// make sure every event has a members array
+eventsData = eventsData.map(function(event) {
+  return {
+    title: event.title,
+    date: event.date,
+    time: event.time,
+    location: event.location,
+    members: Array.isArray(event.members) ? event.members : []
+  };
+});
+
+localStorage.setItem("eventsData", JSON.stringify(eventsData));
+
+// checks if user is admin or board
 function canManageEvents() {
   const role = sessionStorage.getItem("role") || "member";
   return role === "admin" || role === "board";
 }
 
-// events
-function renderEvents() { // draws events on the page
+// checks if the typed name is in the members list
+function isValidMember(name) {
+  const membersData = JSON.parse(localStorage.getItem("membersData")) || {
+    board: ["John Smith", "Tom Bark"],
+    active: ["Mike Jordan", "Luis Hank"],
+    admin: ["Prof Jacobs"]
+  };
+
+  const trimmedName = name.trim().toLowerCase();
+
+  return (
+    membersData.board.some(function(member) {
+      return member.toLowerCase() === trimmedName;
+    }) ||
+    membersData.active.some(function(member) {
+      return member.toLowerCase() === trimmedName;
+    }) ||
+    membersData.admin.some(function(member) {
+      return member.toLowerCase() === trimmedName;
+    })
+  );
+}
+
+// draws events on page
+function renderEvents() {
   const container = document.getElementById("eventsContainer");
-  if (!container) return; // finds the <div> where the events should go, if not it stops the function
+  if (!container) return;
 
-  container.innerHTML = ""; // clear old event cards
+  container.innerHTML = "";
 
-  eventsData.forEach((event, index) => { // loop through every event in the array
-    const card = document.createElement("div"); // create a new div for one event card and give it a class name
+  eventsData.forEach(function(event, index) {
+    const card = document.createElement("div");
     card.className = "event-card";
 
     let actions = "";
@@ -40,26 +76,33 @@ function renderEvents() { // draws events on the page
       actions = `
         <button onclick="editEvent(${index})">Edit</button>
         <button onclick="deleteEvent(${index})">Delete</button>
+        <button onclick="addMemberToEvent(${index})">Add Member</button>
+        <button onclick="removeMemberFromEvent(${index})">Remove Member</button>
       `;
     }
 
-    // fills the event card with HTML
+    const memberList =
+      event.members.length > 0
+        ? event.members.join(", ")
+        : "No members assigned";
+
     card.innerHTML = `
       <h3>${event.title}</h3>
       <p><strong>Date:</strong> ${event.date}</p>
       <p><strong>Time:</strong> ${event.time}</p>
       <p><strong>Location:</strong> ${event.location}</p>
+      <p><strong>Members:</strong> ${memberList}</p>
       ${actions}
     `;
 
-    container.appendChild(card); // adds new card
+    container.appendChild(card);
   });
 }
 
-// create event clicked
+// create event
 function addEvent() {
   if (!canManageEvents()) {
-    showStatus("Only admin and board can create events."); // just in case the button appears
+    showStatus("Only admin and board can create events.");
     return;
   }
 
@@ -68,16 +111,21 @@ function addEvent() {
   const time = document.getElementById("eventTime").value.trim();
   const location = document.getElementById("eventLocation").value.trim();
 
-  if (!title || !date || !time || !location) {
+  if (title === "" || date === "" || time === "" || location === "") {
     showStatus("Please fill in all fields.");
     return;
   }
 
-  eventsData.push({ title, date, time, location }); // adds a new event object to the array
+  eventsData.push({
+    title: title,
+    date: date,
+    time: time,
+    location: location,
+    members: []
+  });
 
   localStorage.setItem("eventsData", JSON.stringify(eventsData));
 
-  // clear the input boxes after creating event
   document.getElementById("eventTitle").value = "";
   document.getElementById("eventDate").value = "";
   document.getElementById("eventTime").value = "";
@@ -87,9 +135,8 @@ function addEvent() {
   showStatus("Event added.");
 }
 
-// delete event from array by position
+// delete event
 function deleteEvent(index) {
-  // only admin and board
   if (!canManageEvents()) {
     showStatus("Only admin and board can delete events.");
     return;
@@ -106,10 +153,92 @@ function deleteEvent(index) {
   showStatus("Event deleted.");
 }
 
-// edit
+// add member to event
+function addMemberToEvent(index) {
+  if (!canManageEvents()) {
+    showStatus("Only admin and board can assign members.");
+    return;
+  }
+
+  const event = eventsData[index];
+
+  // make sure members array exists
+  if (!Array.isArray(event.members)) {
+    event.members = [];
+  }
+
+  const memberName = prompt("Enter a member name to assign to this event:");
+  if (memberName === null) return;
+
+  const trimmedName = memberName.trim();
+
+  if (trimmedName === "") {
+    showStatus("Please enter a member name.");
+    return;
+  }
+
+  if (!isValidMember(trimmedName)) {
+    showStatus("That name is not in the members list.");
+    return;
+  }
+
+  const alreadyAssigned = event.members.some(function(member) {
+    return member.toLowerCase() === trimmedName.toLowerCase();
+  });
+
+  if (alreadyAssigned) {
+    showStatus("That member is already assigned to this event.");
+    return;
+  }
+
+  event.members.push(trimmedName);
+
+  localStorage.setItem("eventsData", JSON.stringify(eventsData));
+
+  renderEvents();
+  showStatus("Member added to event.");
+}
+
+// remove member from event
+function removeMemberFromEvent(index) {
+  if (!canManageEvents()) {
+    showStatus("Only admin and board can remove members.");
+    return;
+  }
+
+  const event = eventsData[index];
+
+  if (!Array.isArray(event.members) || event.members.length === 0) {
+    showStatus("There are no members assigned to this event.");
+    return;
+  }
+
+  const memberName = prompt("Enter member name to remove:");
+  if (memberName === null) return;
+
+  const trimmedName = memberName.trim();
+
+  const memberIndex = event.members.findIndex(function(member) {
+    return member.toLowerCase() === trimmedName.toLowerCase();
+  });
+
+  if (memberIndex === -1) {
+    showStatus("That member is not assigned to this event.");
+    return;
+  }
+
+  event.members.splice(memberIndex, 1);
+
+  localStorage.setItem("eventsData", JSON.stringify(eventsData));
+
+  renderEvents();
+  showStatus("Member removed from event.");
+}
+
+// edit event
 function editEvent(index) {
   if (!canManageEvents()) {
-    showStatus("Only admin and board can edit events."); // just in case
+    showStatus("Only admin and board can edit events.");
     return;
   }
 
