@@ -32,6 +32,20 @@ function getAvailability(item) {
   }
 }
 
+function isValidMember(name){
+  const membersData = JSON.parse(localStorage.getItem("membersData"))||{
+    board: [],
+     active: [],
+      admin: []
+  };
+
+  return (
+    membersData.board.includes(name) ||
+    membersData.active.includes(name) ||
+    membersData.admin.includes(name) 
+  );
+}
+
 function canManageInventory() {
   const role = sessionStorage.getItem("role") || "member";
   return role === "admin" || role === "board";
@@ -140,11 +154,13 @@ function openCheckout(index) {
   const item = inventoryData[index];
   const checkoutPanel = document.getElementById("checkoutPanel");
   const checkoutItemName = document.getElementById("checkoutItemName");
+  const checkoutName = document.getElementById("checkoutName");
   const checkoutQty = document.getElementById("checkoutQty");
 
   if (checkoutPanel && checkoutItemName && checkoutQty) {
     checkoutPanel.classList.remove("hidden");
     checkoutItemName.textContent = "Item: " + item.product;
+    checkoutName.value = "";
     checkoutQty.value = "";
   }
 }
@@ -158,11 +174,22 @@ function confirmCheckout() {
   const item = inventoryData[selectedCheckoutIndex];
   const qtyInput = document.getElementById("checkoutQty");
   const checkoutPanel = document.getElementById("checkoutPanel");
-  const username = sessionStorage.getItem("username") || "Unknown User";
+  const nameInput = document.getElementById("checkoutName");
 
-  if (!qtyInput || !checkoutPanel) return;
+  if (!nameInput|| !qtyInput || !checkoutPanel) return;
 
   const qty = Number(qtyInput.value);
+  const memberName = nameInput.value.trim();
+
+  if(memberName === "") {
+    showStatus("Please enter a member name.");
+    return;
+  }
+
+  if(!isValidMember(memberName)){
+    showStatus("That name is not a member.");
+    return;
+  }
 
   if (qtyInput.value.trim() === "" || isNaN(qty)) {
     showStatus("Quantity must be a number.");
@@ -182,7 +209,7 @@ function confirmCheckout() {
   item.inStock = item.inStock - qty;
 
   checkoutRecords.push({
-    user: username,
+    user: memberName,
     item: item.product,
     quantity: qty,
     action: "checkout",
@@ -194,6 +221,7 @@ function confirmCheckout() {
 
   checkoutPanel.classList.add("hidden");
   qtyInput.value = "";
+  nameInput.value = "";
   selectedCheckoutIndex = null;
 
   renderInventory();
@@ -206,12 +234,14 @@ function openReturn(index) {
   const item = inventoryData[index];
   const returnPanel = document.getElementById("returnPanel");
   const returnItemName = document.getElementById("returnItemName");
+  const returnName = document.getElementById("returnName");
   const returnQty = document.getElementById("returnQty");
 
   if (returnPanel && returnItemName && returnQty) {
     returnPanel.classList.remove("hidden");
     returnItemName.textContent = "Item: " + item.product;
     returnQty.value = "";
+    returnName.value = "";
   }
 }
 
@@ -224,11 +254,22 @@ function confirmReturn() {
   const item = inventoryData[selectedCheckoutIndex];
   const qtyInput = document.getElementById("returnQty");
   const returnPanel = document.getElementById("returnPanel");
-  const username = sessionStorage.getItem("username") || "Unknown User";
+  const nameInput = document.getElementById("returnName");
 
-  if (!qtyInput || !returnPanel) return;
+  if (!nameInput|| !qtyInput || !returnPanel) return;
 
   const qty = Number(qtyInput.value);
+  const memberName = nameInput.value.trim();
+
+   if(memberName === "") {
+    showStatus("Please enter a member name.");
+    return;
+  }
+
+  if(!isValidMember(memberName)){
+    showStatus("That name is not a member.");
+    return;
+  }
 
   if (qtyInput.value.trim() === "" || isNaN(qty)) {
     showStatus("Quantity must be a number.");
@@ -248,7 +289,7 @@ function confirmReturn() {
   item.inStock = item.inStock + qty;
 
   checkoutRecords.push({
-    user: username,
+    user: memberName,
     item: item.product,
     quantity: qty,
     action: "return",
@@ -260,6 +301,7 @@ function confirmReturn() {
 
   returnPanel.classList.add("hidden");
   qtyInput.value = "";
+  nameInput.value = "";
   selectedCheckoutIndex = null;
 
   renderInventory();

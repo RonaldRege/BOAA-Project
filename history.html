@@ -1,11 +1,11 @@
-<!--event html-->
+<!--history html-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Events</title>
+    <title>Inventory</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -18,37 +18,41 @@
     <nav class="navbar">
         <a href="dashboard.html" class="tab-button">Home</a>
         <a href="inventory.html" class="tab-button">Inventory</a>
-        <a href="events.html" class="tab-button active">Events</a>
+        <a href="events.html" class="tab-button">Events</a>
         <a href="members.html" class="tab-button">Members</a>
-        <a href="history.html" id="historyTab" class="tab-button">History</a>
+        <a href="history.html" id="historyTab" class="tab-button active">History</a>
+    </nav>
     </nav>
 
     <div class="dashboard-box">
         <p id="welcomeMessage" class="welcome-text"></p>
         <p id="statusMessage" class="status-text"></p>
 
-        <h2 class="page-heading">Events</h2>
+        <h2 class="page-heading">Checkout and Return History</h2>
 
-        <!-- admin/board create event -->
-        <div id="eventsManagementControls" class="admin-panel hidden">
-            <h3>Create Event</h3>
-            <input id="eventTitle" type="text" placeholder="Event Title" />
-            <input id="eventDate" type="text" placeholder="Date" />
-            <input id="eventTime" type="text" placeholder="Time" />
-            <input id="eventLocation" type="text" placeholder="Location" />
-            <button onclick="addEvent()">Create Event</button>
+        <div class="table-wrapper">
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+                        <th>Date / Time</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody"></tbody>
+            </table>
         </div>
-
-
-        <div id="eventsContainer" class="events-grid"></div>
-
     </div>
+
+
 
     <!-- logout -->
     <button class="logout-button" onclick="logout()">Log Out</button>
 
+    <script src="history.js"></script>
     <script src="dashboard.js"></script>
-    <script src="events.js"></script>
 
 </body>
 

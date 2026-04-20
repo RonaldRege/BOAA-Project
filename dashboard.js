@@ -1,6 +1,5 @@
 // dashboard.js
 
-
 // store values from sessionStorage
 const loggedIn = sessionStorage.getItem("loggedIn");
 const username = sessionStorage.getItem("username");
@@ -16,6 +15,14 @@ function canManage() {
   return role === "admin" || role === "board";
 }
 
+function applyHistoryAccess(){
+  const role = sessionStorage.getItem("role") || "member";
+  const historyTab = document.getElementById("historyTab");
+
+  if (historyTab&& role !== "admin" && role !== "board"){
+    historyTab.style.display = "none";
+  }
+}
 
 // welcome text and access level
 function applyRolePermissions() { //search for page elements by ID
@@ -64,3 +71,4 @@ function logout() {
 }
 // runs when page loads 
 applyRolePermissions();
+applyHistoryAccess();

@@ -20,6 +20,7 @@
         <a href="inventory.html" class="tab-button active">Inventory</a>
         <a href="events.html" class="tab-button">Events</a>
         <a href="members.html" class="tab-button">Members</a>
+        <a href="history.html" id="historyTab"  class="tab-button">History</a>
     </nav>
 
     <div class="dashboard-box">
@@ -41,10 +42,13 @@
         </div>
 
 <p id="lowStockMessage" class = "status-text"></p>
+
+
         <!--checkout page-->
         <div id="checkoutPanel" class="admin-panel hidden">
             <h3>Check Out Item</h3>
             <p id="checkoutItemName"></p>
+            <input id="checkoutName" type="text" placeholder="Member name" /> 
             <input id="checkoutQty" type="number" placeholder="Quantity" /> <!-- makes it where it can only be a number inputed -->
             <button onclick="confirmCheckout()">Confirm Checkout</button>
         </div>
@@ -53,6 +57,7 @@
         <div id="returnPanel" class="admin-panel hidden">
             <h3>Return Item</h3>
             <p id="returnItemName"></p>
+            <input id="returnName" type="text" placeholder="Member name" /> 
             <input id="returnQty" type="number" placeholder="Quantity" /> <!-- makes it where it can only be a number inputed -->
             <button onclick="confirmReturn()">Confirm Return</button>
         </div>
